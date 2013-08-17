@@ -1,6 +1,6 @@
 h1. Track Rowcounts for PostgreSQL
 
-This creates a 'rowcounts' schema and the following two tables:
+This creates a 'rowcounts' schema, a function for enabling the triggers on a table, and the following two tables:
 
 * rowcounts.counts
 * rowcounts.count_metrics
@@ -32,3 +32,9 @@ h2. See Also
 Structure, form and approaches taken from:
 
 * "http://wiki.postgresql.org/wiki/Audit_trigger_91plus":http://wiki.postgresql.org/wiki/Audit_trigger_91plus
+
+h2. TODO
+
+* implement a remove function to disable the triggers.
+* make the metrics tracking optional
+
