@@ -21,7 +21,13 @@ To enable the row tracking triggers for a table, execute:
     select rowcounts.track_rowcount_on('schema_name','table_name');
 </pre>
 
-NB: calling this will temporarily lock the table in order to get an accurate initial count.
+NB: calling this will lock the table in order to get an accurate initial count.
+
+To disable row tracking, execute:
+
+<pre>
+    select rowcounts.stop_tracking_rowcount_on('schema_name','table_name');
+</pre>
 
 h2. See Also
 
@@ -35,6 +41,5 @@ Structure, form and approaches taken from:
 
 h2. TODO
 
-* implement a remove function to disable the triggers.
 * make the metrics tracking optional
 

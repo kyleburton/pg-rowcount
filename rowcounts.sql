@@ -169,3 +169,26 @@ LANGUAGE plpgsql
 SECURITY DEFINER
 SET search_path = pg_catalog, public;
 
+
+
+CREATE OR REPLACE FUNCTION rowcounts.stop_tracking_rowcount_on(in_table_schema text, in_table_name text) RETURNS void AS $body$
+DECLARE
+  target_table regclass;
+  _row_trigger_name text;
+  _truncate_trigger_name text;
+  _q_txt text;
+BEGIN
+  target_table = (in_table_schema || '.' || in_table_name)::regclass;
+
+  _row_trigger_name      = 'rowcounts_row_trigger';
+  _truncate_trigger_name = 'rowcounts_truncate_trigger';
+  EXECUTE 'DROP TRIGGER IF EXISTS ' || _row_trigger_name || ' ON ' || quote_ident(target_table::text);
+
+  EXECUTE 'DROP TRIGGER IF EXISTS ' || _truncate_trigger_name || ' ON ' || quote_ident(target_table::text);
+
+END;
+$body$
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = pg_catalog, public;
+
