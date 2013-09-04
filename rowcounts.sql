@@ -14,8 +14,8 @@ GRANT ALL ON rowcounts.counts TO public;
 
 COMMENT ON TABLE rowcounts.counts IS 'Row Counts by table, from rowcounts.track_rowcount_func()';
 
-CREATE INDEX rowcounts_schema_name_table_name_idx ON rowcounts.counts (schema_name,table_name);
-
+DROP INDEX IF EXISTS rowcounts.rowcounts_schema_name_table_name_idx;
+CREATE UNIQUE INDEX rowcounts_schema_name_table_name_idx ON rowcounts.counts (schema_name,table_name);
 
 CREATE TABLE rowcounts.count_metrics (
   id bigserial   primary key,
@@ -30,7 +30,8 @@ GRANT ALL ON rowcounts.count_metrics TO public;
 
 COMMENT ON TABLE rowcounts.count_metrics IS 'Row Counts by table, from rowcounts.track_rowcount_func()';
 
-CREATE INDEX rowcount_metrics_schema_name_table_name_idx ON rowcounts.count_metrics (schema_name,table_name,period);
+DROP INDEX IF EXISTS rowcounts.rowcount_metrics_schema_name_table_name_idx;
+CREATE UNIQUE INDEX rowcount_metrics_schema_name_table_name_idx ON rowcounts.count_metrics (schema_name,table_name,period);
 
 CREATE OR REPLACE FUNCTION rowcounts.track_rowcount_metrics_func(in_table_schema text, in_table_name text, in_period text, incrby integer) RETURNS void AS $body$
 DECLARE
